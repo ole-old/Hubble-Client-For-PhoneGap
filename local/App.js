@@ -21,8 +21,22 @@ $(function() {
 
     start: function(){
 
+
+      var mic = Pouch('mic')
+      mic.post({title: 'mic check'}, function(err, res) {
+        //$("#app").html(JSON.stringify(res))
+        console.log(JSON.stringify(res))
+        console.log(err)
+
+      }) 
+
       // Set the initial collection
       App.setPouch('hubble')
+
+
+
+      console.log("MIC Ch3ck")
+
 
       // Start the Router
       Backbone.history.start({pushState: false})

@@ -9,6 +9,7 @@
   <script>
   </script>
 
+  <script src="../cordova-2.7.0.js"></script>
   <script src="jquery-2.0.1.js"></script>
   <script src="/_utils/script/jquery.couch.js?0.8.0"></script>
   <script src="purl.js"></script>
@@ -75,9 +76,11 @@
   </body>
 
   <script>
-    $(document).ready(function() {
-      App.start()
-    })
+    document.addEventListener("deviceready", onDeviceReady, false);
+    function onDeviceReady(){
+        $("#app").html("started.")
+        App.start()
+    }
   </script>
 
 </html>
