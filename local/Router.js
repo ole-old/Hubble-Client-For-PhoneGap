@@ -22,7 +22,7 @@ $(function() {
     },
 
     collectionsAdd: function(url) {
-      console.log("Adding collection: " + url)
+      console.log("Adding collection : " + url)
        
       // This is how the backbone-pouch todo-sync app does it. I think it ends up in the view because of a trigger
       // from the changes listener... 
@@ -35,10 +35,12 @@ $(function() {
       // @todo jquery.couch.js not working... Using plain HTTP from jQuery
       // $.couch.db("hub-8968fd5708c6c1378ca0864108047948").openDoc("whoami")
       // , {success:function(data) {
-      
-      $.getJSON('http://' + url + "/whoami", function(data) {
+
+      $.getJSON("http://" + url + "/whoami", function(data) {
+        console.log("whoami data: " + JSON.stringify(data))
         var collection = new App.Models.Collection({url: url, name: data.name})
         collection.save(null, {success: function(){
+          console.log("new collection saved")
           App.Router.navigate("collections", {trigger:true})
         }})
       })
