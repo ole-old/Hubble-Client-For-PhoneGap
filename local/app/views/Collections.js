@@ -2,10 +2,9 @@ $(function() {
 
   App.Views.Collections = Backbone.View.extend({
 
-    // Re-rendering the App just means refreshing the statistics -- the rest
-    // of the app doesn't change.
     render: function() {
-      this.$el.append((_.template($("#collections-nav-template").html()))())
+      var $nav = $("#collections-nav-template").html()
+      this.$el.append($nav)
       this.$el.append('<a class="btn" href="#sync" style="position: relative; bottom: 60px; float: right;"><i class="icon-retweet"></i> Sync</a>')
       this.addAll()
     },

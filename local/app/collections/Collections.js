@@ -23,11 +23,6 @@ $(function() {
           }
         }
       }
-    },
-
-    // Collections are sorted by url.
-    comparator: function(collection) {
-      return collection.get('url')
     }
 
   })

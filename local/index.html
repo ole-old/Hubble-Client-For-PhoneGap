@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="en" manifest="appcache.manifest">
+<html lang="en">
 
 <head>
   <meta charset="utf-8">
-  <title>Backbone.js PouchDB Resources</title>
+  <title>My Library</title>
   <link href="vendor/bootstrap/css/bootstrap.css" rel="stylesheet" media="screen">
   <link rel="stylesheet" href="app.css"/>
   <script>
@@ -11,7 +11,6 @@
 
   <script src="../cordova-2.7.0.js"></script>
   <script src="jquery-2.0.1.js"></script>
-  <script src="/_utils/script/jquery.couch.js?0.8.0"></script>
   <script src="purl.js"></script>
   <script src="underscore.js"></script>
   <script src="backbone.js"></script>
@@ -31,12 +30,12 @@
   <script src="app/views/Collection.js"></script>
 
   
-</head>
+  </head>
 
-<body>
+  <body>
 
-  <div id="app"></div>
 
+  </body>
 
   <!-- Templates -->
 
@@ -73,13 +72,11 @@
       </td>
     
   </script>
-  </body>
 
   <script>
     document.addEventListener("deviceready", onDeviceReady, false);
     function onDeviceReady(){
-        $("#app").html("started.")
-        App.start()
+      App.start()
     }
   </script>
 

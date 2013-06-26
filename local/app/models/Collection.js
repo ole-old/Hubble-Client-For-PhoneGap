@@ -7,26 +7,30 @@ $(function() {
 
     replicate: function () {
 
-      // Push
-      this.trigger('pushing')
-      Pouch.replicate('http://' + this.get('url'), this.get('url'), {
-        continuous: false,
-        complete: function(resp) {
-          this.trigger('pushingComplete')
-          // renderStats()
-        }
-      })
+      console.log('sync started started for ' + this.get('collectionId'))
 
       // Pull
       this.trigger('pulling')
-      Pouch.replicate(this.get('url'), 'http://' + this.get('url'), {
+      Pouch.replicate(this.get('collectionId'), 'http://' + this.get('url'), {
         continuous: false,
         complete: function(resp) {
+          console.log('pull replication complete for ' + this.get('collectionId'))
           this.trigger('pullComplete')
-          // pullResps[url] = resp
-          // renderStats()
+       
+          // Push
+          this.trigger('push')
+          Pouch.replicate('http://' + this.get('url'), this.get('collectionId'), {
+            continuous: false,
+            complete: function(resp) {
+              console.log('push replication complete for ' + this.get('collectionId'))
+              this.trigger('pushComplete')
+            }
+          })   
+
         }
       })
+
+
     }
 
   })
