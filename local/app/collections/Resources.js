@@ -12,7 +12,7 @@ $(function() {
           fun: {
             map: function(doc) {
               if (doc.kind === 'Resource') {
-                emit(doc.order, null)
+                emit(doc._id, true)
               }
             }
           }

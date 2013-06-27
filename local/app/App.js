@@ -6,9 +6,9 @@ $(function() {
     Views: {},
     Collections: {},
 
-    el: 'body',
+    el: '#app',
 
-    template: _.template('<div id="app"></div>'),
+    template: _.template($("#app-template").html()),
 
     render: function(){
       this.$el.html(this.template());

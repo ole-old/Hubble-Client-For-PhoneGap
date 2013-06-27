@@ -12,7 +12,7 @@ $(function() {
           fun: {
             map: function(doc) {
               if (doc.kind === 'collection') {
-                emit(doc.url, null)
+                emit(doc._id, null)
               }
             }
           }

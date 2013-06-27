@@ -16,26 +16,15 @@ $(function() {
       App.collections.fetch({success: function() {
         App.collectionsView = new App.Views.Collections({collection: App.collections}) 
         App.collectionsView.render()
-        $('#app').html(App.collectionsView.el)        
+        App.$el.children('.content').html(App.collectionsView.el)        
       }})
 
     },
 
     collectionsAdd: function(url) {
+      console.log("################# Bar 2")
       console.log("Adding collection : " + url)
        
-      // This is how the backbone-pouch todo-sync app does it. I think it ends up in the view because of a trigger
-      // from the changes listener... 
-      // App.collections.create({url: url})
-
-      // This makes a little more sense to me and doesn't depend on the change feed listener
-      // I think I prefer this because using Collections for anything other than that initial query
-      // seems awkward to me.
-
-      // @todo jquery.couch.js not working... Using plain HTTP from jQuery
-      // $.couch.db("hub-8968fd5708c6c1378ca0864108047948").openDoc("whoami")
-      // , {success:function(data) {
-
       $.getJSON("http://" + url + "/whoami", function(data) {
         console.log("whoami data: " + JSON.stringify(data))
         var collection = new App.Models.Collection({url: url, name: data.name})
@@ -70,7 +59,7 @@ $(function() {
         console.log(App.resources)
         App.resourcesView = new App.Views.Resources({collection: App.resources})
         App.resourcesView.render()
-        $("#app").html(App.resourcesView.el)
+        App.$el.children('.content').html(App.resourcesView.el)
       }})
 
     }

@@ -5,20 +5,20 @@
   <meta charset="utf-8">
   <title>My Library</title>
   <link href="vendor/bootstrap/css/bootstrap.css" rel="stylesheet" media="screen">
-  <link rel="stylesheet" href="app.css"/>
+  <link rel="stylesheet" href="app/app.css"/>
   <script>
   </script>
 
   <script src="../cordova-2.7.0.js"></script>
-  <script src="jquery-2.0.1.js"></script>
-  <script src="purl.js"></script>
-  <script src="underscore.js"></script>
-  <script src="backbone.js"></script>
-  <script src="pouchdb-nightly.js"></script>
-  <script src="backbone-pouch.js"></script>
-  <script src="purl.js"></script>
-  <script src="App.js"></script>
-  <script src="Router.js"></script>
+  <script src="vendor/jquery-2.0.1.js"></script>
+  <script src="vendor/purl.js"></script>
+  <script src="vendor/underscore.js"></script>
+  <script src="vendor/backbone.js"></script>
+  <script src="vendor/pouchdb-nightly.js"></script>
+  <script src="vendor/backbone-pouch.js"></script>
+  <script src="vendor/purl.js"></script>
+  <script src="app/App.js"></script>
+  <script src="app/Router.js"></script>
 
   <script src="app/models/Resource.js"></script>
   <script src="app/models/Collection.js"></script>
@@ -34,10 +34,29 @@
 
   <body>
 
+    <div id="app"> </div>
 
   </body>
 
   <!-- Templates -->
+
+  <script type="text/template" id="app-template">
+
+    <div class="header">
+      <ul class="nav nav-tabs">
+        <li>
+          <a href="/hubble/_design/hubble-remote/pages/databases.html">BeLL Collections</a>
+        </li>
+        <li class="active">
+          <a href="/hubble/_design/hubble-local/index.html">My Collections</a>
+        </li>
+      </ul>
+      <a class="btn" href="#sync" style="position: relative; bottom: 60px; float: right;"><i class="icon-retweet"></i> Sync</a>
+    </div> 
+
+    <div class="body"> </div>
+
+  </script>
 
   <script type="text/template" id="collections-nav-template">
     <ul class="nav nav-tabs">
@@ -52,7 +71,7 @@
 
   <script type="text/template" id="collection-item-template">
     <div class="view">
-    <label><a href="#collection/<%= url %>"><%= name %></a><a class="destroy"> <i class="icon-remove"></i></a></label>
+    <label><a href="#collection/<%= _id %>"><%= name %></a><a class="destroy"> <i class="icon-remove"></i></a></label>
     </div>
   </script>
 

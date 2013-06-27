@@ -6,28 +6,28 @@ $(function() {
     },
 
     replicate: function () {
-
-      console.log('sync started started for ' + this.get('collectionId'))
+      console.log(JSON.stringify(this))
+      var remote = this.get('remote')
+      var local = this.get('local')
+      console.log('sync started started for ' + local + ' <-> ' + remote)
 
       // Pull
       this.trigger('pulling')
-      Pouch.replicate(this.get('collectionId'), 'http://' + this.get('url'), {
-        continuous: false,
-        complete: function(resp) {
-          console.log('pull replication complete for ' + this.get('collectionId'))
-          this.trigger('pullComplete')
-       
-          // Push
-          this.trigger('push')
-          Pouch.replicate('http://' + this.get('url'), this.get('collectionId'), {
-            continuous: false,
-            complete: function(resp) {
-              console.log('push replication complete for ' + this.get('collectionId'))
-              this.trigger('pushComplete')
-            }
-          })   
+      Pouch.replicate(remote, local, function(err, doc) {
+        console.log('pull replication complete for ' + local + " <- " + remote)
 
-        }
+        /*
+        var db = new Pouch(local)
+        db.get('whoami', function(err, doc) {
+          console.log(JSON.stringify(doc))
+        })
+        // Push
+        this.trigger('push')
+        Pouch.replicate(local, remote, function(err, doc) {
+          console.log('push replication complete for ' + local + ' -> ' + remote)
+        })   
+        */
+        
       })
 
 
