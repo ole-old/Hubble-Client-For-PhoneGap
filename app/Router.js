@@ -2,11 +2,15 @@ $(function() {
   App.Router = new (Backbone.Router.extend({
 
     routes: {
-      '': 'collections',
+      '': 'welcome',
       'collections': 'collections',
       'collections/add/*url': 'collectionsAdd',
       'collection/*collectionId': 'collection',
       'sync': 'replicate'
+    },
+
+    welcome: function() {
+      // do nothing
     },
 
     collections: function() {
@@ -39,8 +43,9 @@ $(function() {
       // $.couch.db("hub-8968fd5708c6c1378ca0864108047948").openDoc("whoami")
       // , {success:function(data) {
 
-
-      $.getJSON("http://" + url + "/whoami", function(data) {
+      var whoamiUrl = "http://" + url + "/whoami"
+      console.log(whoamiUrl)
+      $.getJSON(whoamiUrl, function(data) {
         console.log("whoami data: " + JSON.stringify(data))
 
         var remote = 'http://' + url
