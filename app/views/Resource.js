@@ -34,7 +34,7 @@ $(function() {
       */
       var model = this.model.toJSON()
       var vars = {
-        pouchAttachment: model._id + "/" + _.keys(model._attachments)[0],
+        pouchAttachment: _.has(model, "_attachments") ? model._id + "/" + _.keys(model._attachments)[0] : '',
         name: model.name,
         pouch: App.currentPouch
       }
