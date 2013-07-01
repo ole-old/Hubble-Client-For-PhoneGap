@@ -10,7 +10,7 @@ $(function() {
 
     // The DOM events specific to an item.
     events: {
-      "click a.destroy" : "clear"
+      "click a.destroy" : "destroy"
     },
 
     // The CollectionView listens for changes to its model, re-rendering. Since there's
@@ -28,18 +28,9 @@ $(function() {
     },
 
     // Remove the item, destroy the model.
-    clear: function() {
-      // @todo We should only have to do this.model.destroy() :-/ 
-      // Not sure why that's not working.
-      // this.model.destroy()
-      
-      var that = this
-      var deleteMe = new App.Models.Resource({id:this.model.attributes._id})
-      deleteMe.fetch({success: function() {
-        that.model.destroy()
-        deleteMe.destroy()
-      }})
-      
+    destroy: function() {
+      this.model.destroy()
+      // @todo REMOVE ASSOCIATED POUCH!!
     }
 
   })

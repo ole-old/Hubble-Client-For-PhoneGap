@@ -2,9 +2,9 @@ $(function() {
   App.Router = new (Backbone.Router.extend({
 
     routes: {
-      '': 'welcome',
+      '': 'collections',
       'collections': 'collections',
-      'collections/add/*url': 'collectionsAdd',
+      'collections/add/*url': 'collectionAdd',
       'collection/*collectionId': 'collection',
       'sync': 'replicate'
     },
@@ -26,22 +26,10 @@ $(function() {
 
     },
 
-    collectionsAdd: function(url) {
-      console.log("################# Bar 2")
+    collectionAdd: function(url) {
+      App.setPouch('hubble')
 
       console.log("Adding collection : " + url)
-       
-      // This is how the backbone-pouch todo-sync app does it. I think it ends up in the view because of a trigger
-      // from the changes listener... 
-      // App.collections.create({url: url})
-
-      // This makes a little more sense to me and doesn't depend on the change feed listener
-      // I think I prefer this because using Collections for anything other than that initial query
-      // seems awkward to me.
-
-      // @todo jquery.couch.js not working... Using plain HTTP from jQuery
-      // $.couch.db("hub-8968fd5708c6c1378ca0864108047948").openDoc("whoami")
-      // , {success:function(data) {
 
       var whoamiUrl = "http://" + url + "/whoami"
       console.log(whoamiUrl)
@@ -63,10 +51,13 @@ $(function() {
         // create the new local pouch
         var newPouch = new Pouch(local)
 
-        collection.save(null, {success: function(){
+        collection.save()
+
+        collection.on('sync', function(){
           console.log("new collection saved")
+          App.trigger('collectionAdded')
           App.Router.navigate("collections", {trigger:true})
-        }})
+        })
 
       })
 
@@ -82,20 +73,16 @@ $(function() {
     
       // This will modify PouchBackbone settings so collection fetch from correct Pouch
       
-      console.log("#1")
       var collection = new App.Models.Collection({_id: collectionId})
-      console.log("#2")
       collection.fetch({success: function(model, response, options) {
-        console.log("#3")
-        console.log(JSON.stringify(collection.models))
         App.setPouch(collection.get('local'))
         console.log("Pouch set to " + collection.get('local'))
-        /*
-        var db = Pouch(collectionName)
+      
+        var db = Pouch(collection.get('local'))
         db.allDocs({include_docs: true}, function(err, response) {
           console.log(response)
         })
-        */
+        
         
         App.resources = new App.Collections.Resources()
         App.resources.fetch({success: function() {

@@ -9,7 +9,7 @@
   <script>
   </script>
 
-  <script src="vendor/cordova-2.7.0.js"></script>
+  <!--script src="vendor/cordova-2.7.0.js"></script-->
   <script src="vendor/jquery-2.0.1.js"></script>
   <script src="vendor/purl.js"></script>
   <script src="vendor/underscore.js"></script>
@@ -45,30 +45,23 @@
     <div class="header">
       <ul class="nav nav-tabs">
         <li>
-          <a href="/hubble/_design/hubble-remote/pages/databases.html">BeLL Collections</a>
+          <a href="http://192.168.0.111:5984/hubble/_design/hubble-server/index.html">BeLL Collections</a>
         </li>
         <li class="active">
-          <a href="/hubble/_design/hubble-local/index.html">My Collections</a>
+          <a href="http://127.0.0.1/index.html#collections">My Collections</a>
         </li>
       </ul>
       <a class="btn" href="#sync" style="position: relative; bottom: 60px; float: right;"><i class="icon-retweet"></i> Sync</a>
     </div> 
 
     <div class="body"> 
-      <a href="#collections/add/hammock.treehouse.su/collection-8968fd5708c6c1378ca0864108065482">Start simulation</a>
+    
     </div>
 
   </script>
 
   <script type="text/template" id="collections-nav-template">
-    <ul class="nav nav-tabs">
-      <li>
-        <a href="/hubble/_design/hubble-remote/pages/databases.html">BeLL Collections</a>
-      </li>
-      <li class="active">
-        <a href="/hubble/_design/hubble-local/index.html">My Collections</a>
-      </li>
-    </ul>
+
   </script>
 
   <script type="text/template" id="collection-item-template">
@@ -95,10 +88,12 @@
   </script>
 
   <script>
-    document.addEventListener("deviceready", onDeviceReady, false);
-    function onDeviceReady(){
+    $(document).ready(function() { /* For testing browsers */
+    //document.addEventListener("deviceready", onDeviceReady, false);
+    //function onDeviceReady(){
       App.start()
-    }
+    //}
+    }) /* For testing browsers */
   </script>
 
 </html>
