@@ -9,7 +9,7 @@
   <script>
   </script>
 
-  <!--script src="vendor/cordova-2.7.0.js"></script-->
+  <script src="vendor/cordova-2.7.0.js"></script>
   <script src="vendor/jquery-2.0.1.js"></script>
   <script src="vendor/purl.js"></script>
   <script src="vendor/underscore.js"></script>
@@ -48,14 +48,14 @@
           <a href="http://192.168.0.111:5984/hubble/_design/hubble-server/index.html">BeLL Collections</a>
         </li>
         <li class="active">
-          <a href="http://127.0.0.1/index.html#collections">My Collections</a>
+          <a href="file:///android_asset/www/index.html">My Collections</a>
         </li>
       </ul>
       <a class="btn" href="#sync" style="position: relative; bottom: 60px; float: right;"><i class="icon-retweet"></i> Sync</a>
     </div> 
 
     <div class="body"> 
-    
+
     </div>
 
   </script>
@@ -88,12 +88,14 @@
   </script>
 
   <script>
-    $(document).ready(function() { /* For testing browsers */
-    //document.addEventListener("deviceready", onDeviceReady, false);
-    //function onDeviceReady(){
+    //$(document).ready(function() { /* For testing browsers */
+      console.log("ok")
+    document.addEventListener("deviceready", onDeviceReady, false);
+    function onDeviceReady(){
+      console.log("started")
       App.start()
-    //}
-    }) /* For testing browsers */
+    }
+    //}) /* For testing browsers */
   </script>
 
 </html>
