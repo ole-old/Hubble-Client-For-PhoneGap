@@ -9,10 +9,6 @@ $(function() {
       'sync': 'replicate'
     },
 
-    welcome: function() {
-      // do nothing
-    },
-
     collections: function() {
       App.setPouch('hubble')
       if(!App.collections) {
