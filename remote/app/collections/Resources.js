@@ -5,7 +5,7 @@ $(function() {
   App.Collections.Resources = Backbone.Collection.extend({
     
     url: function() {
-      return '/' + App.thisDb + '/_all_docs?include_docs=true'
+      return 'http://192.168.0.111:5984/' + App.thisDb + '/_all_docs?include_docs=true'
     },
     
     parse: function(response) {

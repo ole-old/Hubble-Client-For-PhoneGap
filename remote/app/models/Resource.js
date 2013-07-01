@@ -6,8 +6,8 @@ $(function() {
 
     url: function() {
       var url = (_.has(this, 'id'))
-        ? '/' + App.thisDb + '/' + this.id + "?rev=" + this.get('_rev') // For READ, UPDATE, and DELETE
-        : '/' + App.thisDb // for CREATE
+        ? 'http://192.168.0.111:5984/' + App.thisDb + '/' + this.id + "?rev=" + this.get('_rev') // For READ, UPDATE, and DELETE
+        : 'http://192.168.0.111:5984/' + App.thisDb // for CREATE
 
       return url
     },

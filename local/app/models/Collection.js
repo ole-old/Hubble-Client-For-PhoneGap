@@ -5,6 +5,15 @@ $(function() {
       kind: 'collection'
     },
 
+    initialize: function() {
+      if (this.get('local')) {
+        var db = new Pouch(this.get('local'))
+        db.allDocs({include_docs: true}, function(err, response) {
+          console.log(JSON.stringify(response))
+        })
+      }
+    },
+
     replicate: function () {
       console.log(JSON.stringify(this))
       var remote = this.get('remote')

@@ -13,8 +13,8 @@ $(function() {
         ? this.db()
         : this.db
       var url = (_.has(this, 'id'))
-        ? '/' + this.db() + '/' + this.id + "?rev=" + this.get('_rev')
-        : '/' + this.db()
+        ? 'http://192.168.0.111:5984/' + this.db() + '/' + this.id + "?rev=" + this.get('_rev')
+        : 'http://192.168.0.111:5984/' + this.db()
       return url
     },
 
