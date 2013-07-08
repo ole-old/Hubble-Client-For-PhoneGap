@@ -1,6 +1,6 @@
 $(function() {
 
-  App.Models.Collection = Backbone.Model.extend({
+  App.Models.Cx = Backbone.Model.extend({
     defaults: {
       kind: 'collection'
     },
@@ -13,6 +13,32 @@ $(function() {
         })
       }
     },
+
+    sync: function (method, model, options) {
+      switch(method) {
+
+        case 'create':
+          var cxs = App.getCxs()
+          cxs[id] = cx
+          localStorage.Cxs = cxs
+        break
+
+        case 'read':
+          return (App.getCxs())[id]
+        break
+
+        case 'update':
+          // @todo
+        break
+
+        case 'delete'
+          var cxs = App.getCxs()
+          delete cxs[id]
+          localStorage.cxs = cxs
+        break
+
+      }
+    }
 
     replicate: function () {
       console.log(JSON.stringify(this))

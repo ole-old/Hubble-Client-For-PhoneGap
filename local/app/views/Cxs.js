@@ -9,8 +9,8 @@ $(function() {
       this.addAll()
     },
 
-    addOne: function(collection) {
-      var view = new App.Views.Cx({model: collection})
+    addOne: function(cx) {
+      var view = new App.Views.Cx({model: cx})
       this.$el.append(view.render().el)
     },
 

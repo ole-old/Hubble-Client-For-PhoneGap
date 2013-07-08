@@ -8,7 +8,7 @@
   <link rel="stylesheet" href="app/app.css"/>
   <script>
   </script>
-
+  
   <script src="vendor/cordova-2.7.0.js"></script>
   <script src="vendor/jquery-2.0.1.js"></script>
   <script src="vendor/purl.js"></script>
@@ -19,27 +19,27 @@
   <script src="vendor/purl.js"></script>
   <script src="app/App.js"></script>
   <script src="app/Router.js"></script>
-
+  
   <script src="app/models/Resource.js"></script>
-  <script src="app/models/Collection.js"></script>
-  <script src="app/collections/Collections.js"></script>
+  <script src="app/models/Cx.js"></script>
+  <script src="app/collections/Cxs.js"></script>
   <script src="app/collections/Resources.js"></script>
   <script src="app/views/Resources.js"></script>
   <script src="app/views/Resource.js"></script>
-  <script src="app/views/Collections.js"></script>
-  <script src="app/views/Collection.js"></script>
-
+  <script src="app/views/Cxs.js"></script>
+  <script src="app/views/Cx.js"></script>
+  
   
   </head>
-
+  
   <body>
-
+  
     <div id="app"> </div>
-
+  
   </body>
-
+  
   <!-- Templates -->
-
+  
   <script type="text/template" id="app-template">
 
     <div class="header">
@@ -51,7 +51,7 @@
           <a href="../local/index.html">My Collections</a>
         </li>
       </ul>
-      <a class="btn" href="#sync" style="position: relative; bottom: 60px; float: right;"><i class="icon-retweet"></i> Sync</a>
+      <!--a class="btn" href="#sync" style="position: relative; bottom: 60px; float: right;"><i class="icon-retweet"></i> Sync</a-->
     </div> 
 
     <div class="body"> 
@@ -66,33 +66,31 @@
 
   <script type="text/template" id="collection-item-template">
     <div class="view">
-    <label><a href="#collection/<%= _id %>"><%= name %></a><a class="destroy"> <i class="icon-remove"></i></a></label>
+    <label><a href="#collection/<%= id %>"><%= name %></a><a class="destroy"> <i class="icon-remove"></i></a></label>
     </div>
   </script>
 
   <script type="text/template" id="resource-item-template">
     
-      <td style="padding: 20px">
-        <%= name %>
-      </td>
-      <td>
-        <a class="btn" href="/hubble/_design/hubble-remote/apps/PDFjs2/web/viewer.html#pouch=<%= pouch %>&pouchAttachment=<%= pouchAttachment %>"><i class="icon-eye-open"></i> view</a>
-      </td>
-      <td>
-        <a class="btn download" href="#"><i class="icon-circle-arrow-down"></i> download</a>
-      </td>
-      <td>
-        <a class="btn destroy"> <i class="icon-remove"></i> delete</a></label>
-      </td>
+    <td style="padding: 20px">
+      <%= name %>
+    </td>
+    <td>
+      <a class="btn" href="/hubble/_design/hubble-remote/apps/PDFjs2/web/viewer.html#pouch=<%= pouch %>&pouchAttachment=<%= pouchAttachment %>"><i class="icon-eye-open"></i> view</a>
+    </td>
+    <td>
+      <a class="btn download" href="#"><i class="icon-circle-arrow-down"></i> download</a>
+    </td>
+    <td>
+      <a class="btn destroy"> <i class="icon-remove"></i> delete</a></label>
+    </td>
     
   </script>
 
   <script>
     //$(document).ready(function() { /* For testing browsers */
-      console.log("ok")
     document.addEventListener("deviceready", onDeviceReady, false);
     function onDeviceReady(){
-      console.log("started")
       App.start()
     }
     //}) /* For testing browsers */

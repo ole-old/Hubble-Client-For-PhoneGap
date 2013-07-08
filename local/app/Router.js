@@ -4,22 +4,9 @@ $(function() {
     routes: {
       '': 'cxs',
       'collections': 'cxs',
-      'collections/add/*url': 'cxAdd',
+      'collections/add/*url': 'cxAdd', // @todo should be collection/add
       'collection/*collectionId': 'cx',
       'sync': 'replicate'
-    },
-
-    cxs: function() {
-      App.setPouch('hubble')
-      if(!App.collections) {
-        App.collections  = new App.Collections.Collections
-      }
-      App.collections.fetch({success: function() {
-        App.collectionsView = new App.Views.Collections({collection: App.collections}) 
-        App.collectionsView.render()
-        App.$el.children('.body').html(App.collectionsView.el)        
-      }})
-
     },
 
     cxAdd: function(url) {
@@ -31,39 +18,54 @@ $(function() {
         var remote = 'http://' + url
         var local = url.replace(new RegExp('/', 'g'), '_')
         // Create the Hubble Collection
-        var cx = {
+        var cxData = {
           remote: remote,
           local: local,
-          name: data.name
-        })
+          database: data.database,
+          name: data.name,
+          id: remote
+        }
+        var cx = new App.Models.Cx()
+        cx.set(cxData)
+        cx.save()
+        console.log("Cx saved:")
         console.log(JSON.stringify(cx))
-        App.addCx(data._id, collection)
         App.trigger('collectionAdded')
-        App.Router.navigate("collections", {trigger:true})
+        App.Router.navigate("sync", {trigger:true})
       })
     },
 
     replicate: function() {
-      App.collections.each(function(collection) {
-        collection.replicate()
+      var cxs = new App.Collections.Cxs()
+      cxs.fetch()
+      cxs.replicate()
+      cxs.on('replicateDone', function() {
+        App.Router.navigate("collections", {trigger:true})
       })
+    },
+
+    cxs: function() {
+      var cxs = new App.Collections.Cxs()
+      cxs.on('sync', function() {
+        App.cxsView = new App.Views.Cxs({collection: this}) 
+        App.cxsView.render()
+        App.$el.children('.body').html(App.cxsView.el)        
+      })
+      cxs.fetch()
+
     },
 
     cx: function(collectionId) {
     
-      // This will modify PouchBackbone settings so collection fetch from correct Pouch
-      
-      var collection = new App.Models.Collection({_id: collectionId})
-      collection.fetch({success: function(model, response, options) {
-        App.setPouch(collection.get('local'))
-        console.log("Pouch set to " + collection.get('local'))
-      
-        var db = Pouch(collection.get('local'))
+      var cx = new App.Models.Cx({id: collectionId})
+      cx.on('sync', function() {
+        App.setPouch(cx.get('local'))
+        console.log("Pouch set to " + cx.get('local'))
+        var db = Pouch(cx.get('local'))
         db.allDocs({include_docs: true}, function(err, response) {
           console.log(response)
         })
-        
-        
+        /*
         App.resources = new App.Collections.Resources()
         App.resources.fetch({success: function() {
           console.log(JSON.stringify(App.resources.models))
@@ -71,9 +73,9 @@ $(function() {
           App.resourcesView.render()
           App.$el.children('.body').html(App.resourcesView.el)
         }})
-    
-      }})
-      
+        */
+      })
+      cx.fetch()      
     }
 
 

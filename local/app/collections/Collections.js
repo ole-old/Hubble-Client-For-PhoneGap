@@ -1,28 +1,44 @@
 $(function() {
 
-  App.Collections.Collections = Backbone.Collection.extend({
+  App.Collections.Cxs = Backbone.Collection.extend({
 
-    // Reference to this collection's model.
-    model: App.Models.Collection,
+    model: App.Models.Cx,
 
-    // Include collections in Map Reduce response. Order by `url`.
-    pouch: {
-      options: {
-        query: {
-          fun: {
-            map: function(doc) {
-              if (doc.kind === 'collection') {
-                emit(doc._id, null)
-              }
-            }
-          }
-        },
-        changes: {
-          filter: function(doc) {
-            return doc._deleted || doc.kind === 'collection'
-          }
-        }
+    fetch: function() {
+      var cxsData = (!localStorage.Cxs) 
+        ? {} 
+        : localStorage.Cxs
+      if(cxsData.length > 0) {
+        var models = {}
+        _.each(cxsData, function(cxData) { 
+          var cx = new Backbone.Model
+          cx.set(cxData)
+          models.push(cx)
+        })
+        this.models = cxs
+      } 
+    },
+
+    replicate: function() {
+      console.log("All cx in cxs:")
+      console.log(JSON.stringify(this.models))
+      var numberOfCollections = this.models.length
+      if (numberOfCollections === 0) {
+        App.trigger('syncDone')
       }
+      var count = 0
+      _.each(this.models, function(key, cx) {
+        console.log("Replications go " + cx.local + " <-- " + cx.remote)
+        Pouch.replicate(cx.remote, cx.local, function(err,changes) {
+          console.log("REPLICATION DONE")
+          console.log(JSON.stringify(err))
+          console.log(JSON.stringify(changes))
+          count++
+          if(count == numberOfCollections) {
+            App.trigger('syncDone')
+          }
+        })
+      }) 
     }
 
   })
