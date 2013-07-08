@@ -13,16 +13,14 @@ $(function() {
         ? this.db()
         : this.db
       var url = (_.has(this, 'id'))
-        ? 'http://192.168.0.111:5984/' + this.db() + '/' + this.id + "?rev=" + this.get('_rev')
-        : 'http://192.168.0.111:5984/' + this.db()
+        ? App.Server + '/' + App.CollectionsDb + '/' + this.id + "?rev=" + this.get('_rev')
+        : App.Server + '/' + App.CollectionsDb
       return url
     },
 
     // Get the current CouchDB database if there is one
     db : function() {
-      // @todo this doesn't actually check to see if what we find is actually a CouchDB
-      // but maybe we'll never actually want to bother with the performance hit :-P
-      return document.URL.split("/")[3]
+      return 'hubble'
     },
 
     defaults: {
@@ -41,7 +39,7 @@ $(function() {
     process: function() {
       console.log('Attempting to create a database')
       var model = this
-      $.getJSON('/_uuids', function(res) {
+      $.getJSON(App.Server + '/_uuids', function(res) {
         var databaseName = 'collection-' + res.uuids[0]
         $.couch.db(databaseName).create({
           success: function(data) {

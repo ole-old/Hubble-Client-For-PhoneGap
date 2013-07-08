@@ -15,9 +15,9 @@ $(function() {
       // @todo The better way to approach this would be to attach a Collection model to this view. The whoami doc may
       // be pointless...
       var that = this
-      $.couch.db(App.thisDb).openDoc("whoami", {
+      $.couch.db(App.ResourcesDb).openDoc("whoami", {
         success: function(doc) {
-          doc.db = App.thisDb
+          console.log(doc)
           that.$el.children('.header').append(_.template(that.templateHeader, doc))
         }
       })

@@ -56,7 +56,7 @@ $(function() {
     },
 
     ResourceForm : function(db, resourceId) {
-      window.thisDb = db
+      window.CollectionDb = db
       var resource = (resourceId)
         ? new App.Models.Resource({id: resourceId})
         : new App.Models.Resource()
@@ -69,7 +69,7 @@ $(function() {
     },
 
     CollectionResources: function(database) {
-      App.thisDb = database
+      App.ResourcesDb = database
       var resources = new App.Collections.Resources()
       resources.fetch({success: function() {
         var resourcesTableView = new App.Views.ResourcesTable({collection: resources})

@@ -3,7 +3,13 @@ $(function() {
 
   App = new (Backbone.View.extend({
 
+    // Settings
+    Server: 'http://192.168.0.111:5984',
+    CollectionsDb: 'hubble',
+    ResourcesDb: '', // to be set dynamically depending on which Collection is being viewed
+    FilesDb: 'files',
 
+    // Backbone structure
     Models: {},
     Views: {},
     Collections: {},
@@ -20,7 +26,7 @@ $(function() {
 
     start: function(){
       // Default database
-      window.thisDb = document.URL.split("/")[3]
+      $.couch.urlPrefix = App.Server
       this.$el.html(_.template(this.template))
       Backbone.history.start({pushState: false})
     },

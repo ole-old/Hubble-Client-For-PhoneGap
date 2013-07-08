@@ -4,8 +4,10 @@ $(function() {
   // views in Collection databases. We'll mapreduce client side.
   App.Collections.Resources = Backbone.Collection.extend({
     
+    model: App.Models.Resource,
+
     url: function() {
-      return 'http://192.168.0.111:5984/' + App.thisDb + '/_all_docs?include_docs=true'
+      return App.Server + '/' + App.ResourcesDb + '/_all_docs?include_docs=true'
     },
     
     parse: function(response) {
@@ -18,16 +20,11 @@ $(function() {
       });
       return map
     },
-     
-    model: App.Models.Resource,
 
     comparator: function(model) {
       var title = model.get('name')
       if (title) return title.toLowerCase()
-    },
-
-    _db: Backbone.couch.db(window.thisDb)
-
+    }
 
   })
 
