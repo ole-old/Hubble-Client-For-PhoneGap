@@ -2,14 +2,14 @@ $(function() {
   App.Router = new (Backbone.Router.extend({
 
     routes: {
-      '': 'collections',
-      'collections': 'collections',
-      'collections/add/*url': 'collectionAdd',
-      'collection/*collectionId': 'collection',
+      '': 'cxs',
+      'collections': 'cxs',
+      'collections/add/*url': 'cxAdd',
+      'collection/*collectionId': 'cx',
       'sync': 'replicate'
     },
 
-    collections: function() {
+    cxs: function() {
       App.setPouch('hubble')
       if(!App.collections) {
         App.collections  = new App.Collections.Collections
@@ -22,41 +22,25 @@ $(function() {
 
     },
 
-    collectionAdd: function(url) {
-      App.setPouch('hubble')
-
+    cxAdd: function(url) {
       console.log("Adding collection : " + url)
-
       var whoamiUrl = "http://" + url + "/whoami"
-      console.log(whoamiUrl)
+      console.log("Looking for whoami: " + whoamiUrl)
       $.getJSON(whoamiUrl, function(data) {
         console.log("whoami data: " + JSON.stringify(data))
-
         var remote = 'http://' + url
         var local = url.replace(new RegExp('/', 'g'), '_')
-        
-        // Create the Collection Model
-        var collection = new App.Models.Collection({
+        // Create the Hubble Collection
+        var cx = {
           remote: remote,
           local: local,
           name: data.name
         })
-
-        console.log(JSON.stringify(collection))
-
-        // create the new local pouch
-        var newPouch = new Pouch(local)
-
-        collection.save()
-
-        collection.on('sync', function(){
-          console.log("new collection saved")
-          App.trigger('collectionAdded')
-          App.Router.navigate("collections", {trigger:true})
-        })
-
+        console.log(JSON.stringify(cx))
+        App.addCx(data._id, collection)
+        App.trigger('collectionAdded')
+        App.Router.navigate("collections", {trigger:true})
       })
-
     },
 
     replicate: function() {
@@ -65,7 +49,7 @@ $(function() {
       })
     },
 
-    collection: function(collectionId) {
+    cx: function(collectionId) {
     
       // This will modify PouchBackbone settings so collection fetch from correct Pouch
       

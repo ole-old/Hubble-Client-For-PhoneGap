@@ -1,5 +1,10 @@
 $(function() {
 
+  /*
+   *
+   * Note: "cx" refers to a Hubble Collection. Anywhere "collection" is used, it refers to Backbone Collections.
+   */
+
   App = new (Backbone.View.extend({
 
     Models: {},
@@ -15,7 +20,7 @@ $(function() {
     },
 
     start: function(){
-      App.sync()
+      App.syncCxs()
       App.on('syncDone', function() {
         App.setPouch('hubble')
         this.render()
@@ -32,27 +37,45 @@ $(function() {
       App.currentPouch = name
     },
 
-    sync: function() {
-      var db = new Pouch('hubble')
-      db.allDocs({include_docs: true}, function(err, response) {
-        console.log("All docs in Hubble database:")
-        console.log(JSON.stringify(response))
-        var numberOfCollections = response.rows.length
-        if (numberOfCollections === 0) {
-          App.trigger('syncDone')
-        }
-        var count = 0
-        _.each(response.rows, function(row) {
-          console.log("Replications go " + row.doc.local + " <-- " + row.doc.remoteß)
-          Pouch.replicate(row.doc.remote, row.doc.local, function(err,changes) {
-            console.log("REPLICATION DONE")
-            console.log(JSON.stringify(err))
-            console.log(JSON.stringify(changes))
-            count++
-            if(count == numberOfCollections) {
-              App.trigger('syncDone')
-            }
-          })
+    // Get all Hubble Collections
+    getCxs: function() {
+      return (!localStorage.Cxs) 
+        ? {} 
+        : localStorage.Cxs
+    },
+
+    // Add a new Hubble Collection
+    addCx: function(id, cx) {
+      var cxs = App.getCxs()
+      cxs[id] = cx
+      localStorage.Cxs = cxs
+    },
+
+    deleteCx: function(id) {
+      var cxs = App.getCxs()
+      delete cxs[id]
+      localStorage.cxs = cxs
+    },
+
+    syncCxs: function() {
+      var cxs = App.getCxs()
+      console.log("All cx in cxs:")
+      console.log(JSON.stringify(cxs))
+      var numberOfCollections = cxs.length
+      if (numberOfCollections === 0) {
+        App.trigger('syncDone')
+      }
+      var count = 0
+      _.each(cxs, function(id, cx) {
+        console.log("Replications go " + cx.local + " <-- " + cx.remote)
+        Pouch.replicate(cx.remote, cx.local, function(err,changes) {
+          console.log("REPLICATION DONE")
+          console.log(JSON.stringify(err))
+          console.log(JSON.stringify(changes))
+          count++
+          if(count == numberOfCollections) {
+            App.trigger('syncDone')
+          }
         })
       }) 
     }
