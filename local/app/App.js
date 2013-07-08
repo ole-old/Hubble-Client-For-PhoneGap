@@ -30,8 +30,7 @@ $(function() {
         fetch: 'query'
       })
       App.currentPouch = name
-    }
-
+    },
 
     sync: function() {
       var db = new Pouch('hubble')
@@ -39,6 +38,9 @@ $(function() {
         console.log("All docs in Hubble database:")
         console.log(JSON.stringify(response))
         var numberOfCollections = response.rows.length
+        if (numberOfCollections === 0) {
+          App.trigger('syncDone')
+        }
         var count = 0
         _.each(response.rows, function(row) {
           console.log("Replications go " + row.doc.local + " <-- " + row.doc.remoteß)
