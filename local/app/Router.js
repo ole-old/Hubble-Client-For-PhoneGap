@@ -56,8 +56,9 @@ $(function() {
     },
 
     cx: function(collectionId) {
-    
+      // Interesting, the first line will work ONCE, thus the second line...
       var cx = new App.Models.Cx({id: collectionId})
+      cx.id = collectionId
       cx.on('sync', function() {
         App.setPouch(cx.get('local'))
         console.log("Pouch set to " + cx.get('local'))
@@ -65,7 +66,6 @@ $(function() {
         db.allDocs({include_docs: true}, function(err, response) {
           console.log(response)
         })
-        /*
         App.resources = new App.Collections.Resources()
         App.resources.fetch({success: function() {
           console.log(JSON.stringify(App.resources.models))
@@ -73,7 +73,6 @@ $(function() {
           App.resourcesView.render()
           App.$el.children('.body').html(App.resourcesView.el)
         }})
-        */
       })
       cx.fetch()      
     }
