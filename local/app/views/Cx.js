@@ -3,7 +3,7 @@ $(function() {
   App.Views.Cx = Backbone.View.extend({
 
     //... is a list tag.
-    tagName:  "li",
+    tagName:  "tr",
 
     // Cache the template function for a single item.
     template: _.template($('#collection-item-template').html()),

@@ -9,7 +9,6 @@
   <script>
   </script>
   
-  <script src="vendor/cordova-2.7.0.js"></script>
   <script src="vendor/jquery-2.0.1.js"></script>
   <script src="vendor/purl.js"></script>
   <script src="vendor/underscore.js"></script>
@@ -65,9 +64,10 @@
   </script>
 
   <script type="text/template" id="collection-item-template">
-    <div class="view">
-    <label><a href="#collection/<%= id %>"><%= name %></a><a class="destroy"> <i class="icon-remove"></i></a></label>
-    </div>
+      <td>
+        <a href="#collection/<%= id %>"><%= name %></a>
+        <a class="destroy"> <i class="icon-remove"></i></a>
+      </td>
   </script>
 
   <script type="text/template" id="resource-item-template">
@@ -88,12 +88,9 @@
   </script>
 
   <script>
-    //$(document).ready(function() { /* For testing browsers */
-    document.addEventListener("deviceready", onDeviceReady, false);
-    function onDeviceReady(){
+    $(document).ready(function() { 
       App.start()
-    }
-    //}) /* For testing browsers */
+    }) 
   </script>
 
 </html>

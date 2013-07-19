@@ -2,6 +2,10 @@ $(function() {
 
   App.Views.Cxs = Backbone.View.extend({
 
+    tagName: 'div',
+
+    attributes: {'class': 'table table-striped'}, 
+
     render: function() {
       var $nav = $("#collections-nav-template").html()
       this.$el.append($nav)
